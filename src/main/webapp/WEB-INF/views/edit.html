@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Thành phố <span th:text="${city.getName()}"></span></title>
+</head>
+<body>
+<section layout:fragment="content" class="container-xl mt-100 mb-5">
+    <h3 style="color: orange">Sửa Thành phố <span th:text="${city.getName()}"></span></h3>
+    <form th:action="@{/edit/{id}(id=${city.getId()})}" method="post" th:object="${city}">
+        <input type="text" th:field="*{id}" name="id" hidden>
+        <div class="form-group">
+            <label for="name" th:text="Tên"></label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên thành phố..."
+                   th:field="*{name}">
+            <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+        </div>
+        <div class="form-group">
+            <label>Quốc gia</label>
+            <select  th:field="*{country}" class="form-control">
+                <option th:each="country : ${countries}" th:value="${country.getId()}" th:text="${country.getName()}"> </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="area">Diện tích (km2)</label>
+            <input type="text" class="form-control" name="area" id="area" placeholder="Nhập diện tích..."
+                      th:field="*{area}"></input>
+            <p style="color: red" th:if="${#fields.hasErrors('area')}" th:errors="*{area}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="population">Dân số (người)</label>
+            <input type="text" class="form-control" name="population" id="population" placeholder="Nhập dân số..." th:field="*{population}">
+            <p style="color: red" th:if="${#fields.hasErrors('population')}" th:errors="*{population}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <textarea rows="8" class="form-control" name="population" id="description" placeholder="Nhập mô tả..." th:field="*{description}"></textarea>
+            <p style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="gdp">GDP bình quân trên đầu người (Đô la Mỹ)</label>
+            <input type="text" class="form-control" name="gdp" id="gdp" placeholder="Nhập chỉ số GDP..." th:field="*{gdp}">
+            <p style="color: red" th:if="${#fields.hasErrors('gdp')}" th:errors="*{gdp}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="imageUrl">Hình ảnh</label>
+            <input type="url" class="form-control" name="imageUrl" id="imageUrl" placeholder="Nhập link ảnh..." th:field="*{imageUrl}">
+            <p style="color: red" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">Name Error</p>
+        </div>
+        <input  type="submit" class="btn btn-warning" value="Lưu">
+        <a class="btn btn-info" th:href="@{/}" th:text="Thoát"></a>
+    </form>
+</section>
+</body>
+</html>

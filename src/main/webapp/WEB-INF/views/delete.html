@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Xoá Thành phố <span th:text="${city.getName()}"></span></title>
+</head>
+<body>
+<h3 style="color: red">Xoá Thành phố <span th:text="${city.getName()}"></span></h3>
+<section layout:fragment="content" class="container-xl mt-100 mb-5">
+    <form th:action="@{/delete/{id}(id=${city.getId()})}" method="post" th:object="${city}" id="form">
+        <input type="text" th:field="*{id}" id="id" name="id" hidden>
+        <div class="form-group">
+            <label for="name" th:text="Tên"></label>
+            <input disabled type="text" class="form-control" name="name" id="name" placeholder="Nhập tên thành phố..."
+                   th:field="*{name}">
+            <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+        </div>
+        <div class="form-group">
+            <label for="country">Quốc gia</label>
+            <input disabled type="text" class="form-control" name="country" id="country" placeholder="Nhập quốc gia..."
+                   th:value="${city.getCountry().getName()}">
+        </div>
+
+        <div class="form-group">
+            <label for="area">Diện tích (km2)</label>
+            <input disabled type="text" class="form-control" name="area" id="area" placeholder="Nhập diện tích..."
+                   th:field="*{area}">
+            <p style="color: red" th:if="${#fields.hasErrors('area')}" th:errors="*{area}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="population">Dân số (người)</label>
+            <input disabled type="text" class="form-control" name="population" id="population"
+                   placeholder="Nhập dân số..." th:field="*{population}">
+            <p style="color: red" th:if="${#fields.hasErrors('population')}" th:errors="*{population}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <textarea rows="8" disabled type="text" class="form-control" name="description" id="description"
+                      placeholder="Nhập mô tả..." th:field="*{description}"></textarea>
+            <p style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="gdp">GDP bình quân trên đầu người (Đô la Mỹ)</label>
+            <input disabled type="text" class="form-control" name="gdp" id="gdp" placeholder="Nhập chỉ số GDP..."
+                   th:field="*{gdp}">
+            <p style="color: red" th:if="${#fields.hasErrors('gdp')}" th:errors="*{gdp}">Name Error</p>
+        </div>
+
+        <div class="form-group">
+            <label for="imageUrl">Hình ảnh</label>
+            <input disabled type="url" class="form-control" name="imageUrl" id="imageUrl" placeholder="Nhập link ảnh..."
+                   th:field="*{imageUrl}">
+            <p style="color: red" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}">Name Error</p>
+        </div>
+        <a class="btn btn-danger " data-toggle="modal" data-target="#exampleModal" th:text="Xoá"></a>
+        <a class="btn btn-info" th:href="@{/}" th:text="Thoát"></a>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc muốn xoá thành phố <span th:text="${city.getName()}"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+                    <button onclick="onD()" type="button" class="btn btn-primary">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function onD() {
+            document.querySelector('#form').submit();
+        }
+    </script>
+</section>
+</body>
+</html>

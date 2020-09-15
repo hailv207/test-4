@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Look up any City information</title>
+</head>
+<body>
+<section layout:fragment="content" class="container-xl mt-100 mb-5">
+    <h3 style="color: aqua">Chi tiết Thành phố <span th:text="${city.getName()}"></span></h3>
+
+    <div class="row">
+            <div class="card col-12" style="width: 18rem;">
+                <img class="card-img-top" th:src="${city.getImageUrl()}" alt="Lỗi đường dẫn ảnh">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${city.getName()}">Card title</h5>
+                    <p class="card-text" th:text="${city.getDescription()}">Some content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Quốc gia: <span th:text="${city.getCountry().getName()}"></span>.</li>
+                    <li class="list-group-item">Diện tích: <span th:text="${@numberFormatter.numberFormat(city.getArea())}"></span> km2.</li>
+                    <li class="list-group-item">Dân số: <span th:text="${@numberFormatter.numberFormat(city.getPopulation())}"></span> người.</li>
+                    <li class="list-group-item">GDP: <span th:text="${@numberFormatter.numberFormat(city.getGdp())}"></span> USD/người.</li>
+                </ul>
+                <div class="card-body">
+                    <a th:href="@{/edit/{id}(id=${city.getId()})}" class="btn btn-warning">Sửa</a>
+                    <a th:href="@{/delete/{id}(id=${city.getId()})}" class="btn btn-danger">Xoá</a>
+                    <a th:href="@{/}" class="btn btn-info">Thoát</a>
+                </div>
+            </div>
+    </div>
+</section>
+</body>
+</html>

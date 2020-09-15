@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Look up any City information</title>
+</head>
+<body>
+<section layout:fragment="content" class="container-xl mt-100 mb-5">
+    <div class="row">
+        <th:block th:each="city : ${cities}">
+            <div class="col-xl-6 col-md-6 col-sm-12 mt-3">
+                <div class="card w-100" style="width: 18rem;">
+                    <a th:href="@{/detail/{id}(id=${city.getId()})}">
+                    <div class="card-img-top img-bg" data-th-city-id="${city.getId()}"
+                         th:styleappend="'background-image:url(' + ${city.getImageUrl()} +')'"
+                         th:src="${city.getImageUrl()}" alt="Lỗi đường dẫn ảnh"></div></a>
+                    <div class="card-body shortenDes">
+                        <a th:href="@{/detail/{id}(id=${city.getId()})}">
+                            <h5 class="card-title" th:text="${city.getName()}">Card title</h5></a>
+                        <p class="card-text" th:text="${city.getShortenDescription()}">Some content.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Quốc gia: <span th:text="${city.getCountry().getName()}"></span>.
+                        </li>
+                        <li class="list-group-item">Diện tích: <span
+                                th:text="${@numberFormatter.numberFormat(city.getArea())}"></span> km2.
+                        </li>
+                        <li class="list-group-item">Dân số: <span
+                                th:text="${@numberFormatter.numberFormat(city.getPopulation())}"></span> người.
+                        </li>
+                        <li class="list-group-item">GDP: <span
+                                th:text="${@numberFormatter.numberFormat(city.getGdp())}"></span> USD/người.
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a th:href="@{/detail/{id}(id=${city.getId()})}" class="btn btn-info">Chi tiết</a>
+                        <a th:href="@{/edit/{id}(id=${city.getId()})}" class="btn btn-warning">Sửa</a>
+                        <a th:href="@{/delete/{id}(id=${city.getId()})}" class="btn btn-danger">Xoá</a>
+                    </div>
+                </div>
+            </div>
+
+        </th:block>
+    </div>
+
+    <script>
+        function onClick(){
+
+            let id = this.getAttribute('city-id');
+            // location.href = '/detail/' + id;
+            console.log(this);
+        }
+    </script>
+</section>
+</body>
+</html>
